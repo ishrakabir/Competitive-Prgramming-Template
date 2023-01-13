@@ -45,36 +45,46 @@ const ll INF = 1e9;
 #define el endl
 
 vector<int> divisors[1000002];
-int sqrt_method(int n)
+vector<int> divsqrt;
+int sqrt_method(int n) // O(sqrtN)
 {
     int cnt = 0, sum = 0;
-    for (int i = 1; i * i <= n;i++)
+    for (int i = 1; i * i <= n; i++)
     {
-        if(n%i==0)
+        if (n % i == 0)
         {
-            cout << i << " " << n / i << el;
+            divsqrt.push_back(i);
+            divsqrt.push_back(n / i);
+            // cout << i << " " << n / i << " ";
             cnt += 1;
             sum += i;
-            if(i!=n/i)
+            if (i != n / i)
             {
                 cnt += 1;
                 sum += n / i;
             }
         }
     }
+    sort(divsqrt.begin(), divsqrt.end());
+    for (int i = 0; i < divsqrt.size(); i++)
+        cout<< divsqrt[i] << " ";
     cout << cnt << " " << sum;
 }
-void Divisors(int n)
+void Divisors(int n) // O(NlogN)
 {
     for (int i = 1; i <= n; i++)
     {
         for (int j = i; j <= n; j += i)
             divisors[j].push_back(i);
     }
+    cout << endl;
+    for (int i = 0; i < divisors[n].size(); i++)
+        cout << divisors[n][i] << " ";
 }
 void solve()
 {
     sqrt_method(36);
+    Divisors(36);
 }
 
 int main()
